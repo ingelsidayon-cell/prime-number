@@ -1,81 +1,74 @@
 #include <iostream>
 #include <vector>
 #include <cstdlib>
-#include <cstring>
 #include <cstdint>
-#include <climits>
+#include <cctype>
 
-// Function to check if a string represents a positive integer
-bool isPositiveInteger(const char* str) {
-    if (str == nullptr || *str == '\0') return false;
-
-    // Check if the string is a valid number
+int main(int argc, char* argv[]) {
+    // Check for correct number of arguments
+    if (argc != 2) {
+        std::cerr << "argument should be a natural number" << std::endl;
+        return 1;
+    }
+    
+    // Parse the argument
     char* endptr;
-    long val = strtol(str, &endptr, 10);
-
-    // Check for conversion errors or negative numbers
-    if (endptr == str || *endptr != '\0' || val <= 0) {
-        return false;
+    unsigned long long arg = std::strtoull(argv[1], &endptr, 10);
+    
+    // Check if the entire string was consumed and if it's a positive number
+    if (*endptr != '\0' || arg == 0) {
+        std::cerr << "argument should be a natural number" << std::endl;
+        return 1;
     }
-
-    // Check for overflow
-    if (val > ULLONG_MAX) {
-        return false;
+    
+    // Special cases
+    if (arg == 1) {
+        std::cout << 2 << std::endl;
+        return 0;
     }
-
-    return true;
-}
-
-// Function to find the nth prime number
-uint64_t findNthPrime(size_t n) {
-    if (n == 0 || n == 1) return 2;
-    if (n == 2) return 3;
-
-    std::vector<uint64_t> primes = {2, 3};
-    size_t test_prime_limit = 1;
-    uint64_t candidate = 5;
-
-    while (primes.size() < n) {
-        // Update test_prime_limit if needed
+    if (arg == 2) {
+        std::cout << 3 << std::endl;
+        return 0;
+    }
+    
+    // For arg > 2, we need to generate primes
+    std::vector<uint64_t> primes;
+    primes.push_back(2);  // First prime
+    primes.push_back(3);  // Second prime
+    
+    // We need to find 'arg' primes, so we start with 2 primes already in the vector
+    uint64_t count = 2;
+    uint64_t candidate = 5;  // Start testing at 5 (first odd number after 3)
+    uint64_t test_prime_limit = 1;  // Index to track which primes to test against
+    
+    while (count < arg) {
+        // If the square of the current prime limit is <= candidate,
+        // we need to increment the limit
         if (primes[test_prime_limit] * primes[test_prime_limit] <= candidate) {
             test_prime_limit++;
         }
-
-        // Test primality against known primes
+        
+        // Test against primes from index 1 to test_prime_limit-1
         bool is_prime = true;
-        if (test_prime_limit > 1) {
-            for (size_t i = 1; i < test_prime_limit; ++i) {
-                if (candidate % primes[i] == 0) {
-                    is_prime = false;
-                    break;
-                }
+        for (uint64_t i = 1; i < test_prime_limit; i++) {
+            if (candidate % primes[i] == 0) {
+                is_prime = false;
+                break;
             }
         }
-
+        
+        // If no divisors found, the candidate is prime
         if (is_prime) {
             primes.push_back(candidate);
+            count++;
         }
-
-        candidate += 2; // Only test odd numbers
+        
+        // Move to next odd candidate
+        candidate += 2;
     }
-
-    return primes.back();
-}
-
-int main(int argc, char* argv[]) {
-    if (argc != 2) {
-        std::cerr << "Usage: prime-number <number_of_primes>\n";
-        return 1;
-    }
-
-    if (!isPositiveInteger(argv[1])) {
-        std::cerr << "argument should be a natural number\n";
-        return 1;
-    }
-
-    size_t n = std::strtoul(argv[1], nullptr, 10);
-    uint64_t prime = findNthPrime(n);
-    std::cout << prime << "\n";
-
+    
+    // Output the final prime
+    std::cout << primes.back() << std::endl;
+    
     return 0;
 }
