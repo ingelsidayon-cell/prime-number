@@ -20,44 +20,44 @@ uint64_t validateArgument(const std::string& arg) {
 
 int main(int argc, char* argv[]) {
     if (argc != 2) {
-        std::cerr << "Usage: prime-number <number_of_primes>\n";
+        std::cerr << "Usage: " << argv[0] << " <number_of_primes>\n";
         return 1;
     }
 
-    uint64_t n;
+    uint64_t target_count;
     try {
-        n = validateArgument(argv[1]);
+        target_count = validateArgument(argv[1]);
     } catch (const std::exception& e) {
         std::cerr << e.what() << std::endl;
         return 1;
     }
 
     // Handle special cases
-    if (n == 0) {
+    if (target_count == 0) {
         std::cerr << "argument should be a natural number" << std::endl;
         return 1;
     }
 
-    if (n == 1) {
+    if (target_count == 1) {
         std::cout << "2" << std::endl;
         return 0;
     }
 
-    if (n == 2) {
+    if (target_count == 2) {
         std::cout << "3" << std::endl;
         return 0;
     }
 
     // Initialize primes vector with first two primes
     std::vector<uint64_t> primes;
-    primes.reserve(n+2);
+    primes.reserve(target_count+2);
     primes.push_back(2);
     primes.push_back(3);
 
     uint64_t candidate = 5;  // First candidate to test
     uint64_t test_prime_limit = 1;  // Index to determine how many primes to test against
     
-    while (primes.size() < n) {
+    while (primes.size() < target_count) {
         // Update test_prime_limit if needed
         while (primes[test_prime_limit] * primes[test_prime_limit] <= candidate) {
             test_prime_limit++;
@@ -80,6 +80,6 @@ int main(int argc, char* argv[]) {
         candidate += 2;
     }
 
-    std::cout << primes[n-1] << std::endl;
+    std::cout << primes[target_count-1] << std::endl;
     return 0;
 }
