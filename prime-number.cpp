@@ -44,11 +44,6 @@ int main(int argc, char* argv[]) {
 		return 0;
 	}
 
-	if (target_count == 2) {
-		std::cout << "3" << std::endl;
-		return 0;
-	}
-
 	// Initialize primes vector with first two primes
 	std::vector<uint64_t> primes;
 	primes.reserve(target_count+2);
