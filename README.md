@@ -1,7 +1,11 @@
 This was a test of local models, to see if they could write code that was 
 not in their memories.
 
-They could not.  I don't know if the big cloud models can do any better.
+unsloth/Qwen3-Coder-30B-A3B-Instruct-1M-GGUF managed it.  The rest generally failed or crashed.
+
+Note that because unsloth/Qwen3-Coder-30B-A3B-Instruct-1M-GGUF managed it once, might not succeed twice.
+
+They mostly could not.  I don't know if the big cloud models can do any better.
 
 I tried to get them to follow the instructions:
 
