@@ -1,17 +1,17 @@
 {
-    "version": "2.0.0",
-    "tasks": [
-        {
-            "label": "CMake: Build",
-            "type": "shell",
-            "command": "cmake",
-            "args": ["--build", "${command:cmake.buildDirectory}", "--config", "Debug"],
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            },
-            "problemMatcher": ["$gcc"],
-            "detail": "Build with CMake (Debug)"
-        }
-    ]
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "CMake: Build",
+			"type": "shell",
+			"command": "cmake",
+			"args": ["--build", "${command:cmake.buildDirectory}", "--config", "Debug"],
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"problemMatcher": ["$gcc"],
+			"detail": "Build with CMake (Debug)"
+		}
+	]
 }

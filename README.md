@@ -15,7 +15,7 @@ Give me a c++ program that sieves the prime numbers, using the algorithm that it
 
 Take the number of primes, `number_of_primes`, to be generated as a command line argument, which argument is the number of primes to find, not the highest number to be tested for primality -- there should be a vector of primes in which all primes are pushed, but not a vector of numbers, into which all numbers are pushed.   The program should output the final prime.
 
-The program should be called prime-number, and `prime-number 1` should output 2,   `prime-number 2` should output 3, `prime-number 3` should output 5, `prime-number 4` should output 7, `prime-number 5` should output 11, and `prime-number 983`  should output 7753, and  `prime-number 12345678` should output 224284387
+The program should be called prime-number, and `prime-number 1` should output 2,   `prime-number 2` should output 3, `prime-number 3` should output 5, `prime-number 4` should output 7, `prime-number 5` should output 11, and `prime-number 983`  should output 7753, and  `prime-number 1234567` should output 19394489
 
 If the argument is not a positive integer, should issue the error message "argument should be a natural number"
 
