@@ -1,67 +1,80 @@
 #include <iostream>
 #include <vector>
-#include <cstdint>
+#include <string>
 #include <cstdlib>
-#include <cstring>
+#include <cctype>
 #include <cmath>
-#include <format>
+#include <cstdint>
+
+using namespace std;
 
 int main(int argc, char* argv[]) {
-	uint64_t number_of_primes;
-	if (argc < 2) {
-		std::cerr << "Usage: " << argv[0] << " <number_of_primes>" << std::endl;
-		return 1;
-	}
+    if (argc != 2) {
+        cout << "Usage: prime-number <number_of_primes>" << endl;
+        return 1;
+    }
 
-	try {
-		size_t chars_read = 0;
-		auto n = std::stoll( argv[1] , &chars_read);
-		if (chars_read != strlen( argv[1] ) || n < 1) {
-			throw std::invalid_argument("argument should be a natural number");
-		}
-		number_of_primes=n;
+    string arg = argv[1];
+    if (arg.empty()) {
+        cout << "argument should be a natural number" << endl;
+        return 1;
+    }
 
-	} catch (const std::exception& e) {
-		std::cerr << "Error: " << e.what() << "\n";
-		return 1;
-	}
+    bool isNatural = true;
+    for (char c : arg) {
+        if (!isdigit(c)) {
+            isNatural = false;
+            break;
+        }
+    }
+    if (!isNatural || arg[0] == '0') {
+        cout << "argument should be a natural number" << endl;
+        return 1;
+    }
 
-	if (number_of_primes == 1) {
-		std::cout << "2" << std::endl;
-		return 0;
-	}
+    unsigned long long number_of_primes = stoull(arg);
+    if (number_of_primes == 0) {
+        cout << "argument should be a natural number" << endl;
+        return 1;
+    }
 
-	// Initialize primes vector with first two primes
-	std::vector<uint64_t> primes;
-	primes.reserve(number_of_primes);
-	primes.push_back(2);
-	primes.push_back(3);
-	uint64_t candidate = 5;  // First candidate to test
-	uint64_t test_prime_limit = 2;  // Index to determine how many primes to test against
+    vector<uint64_t> primes;
+    primes.reserve(number_of_primes);
+    primes.push_back(2);
+    primes.push_back(3);
 
-	while (primes.size() < number_of_primes) {
-		bool is_prime = true;
-		uint64_t limit = std::sqrt(candidate);
-		for (uint64_t i = 1; i < test_prime_limit && primes[i] <= limit; ++i) {
-			if (candidate % primes[i] == 0) {
-				is_prime = false;
-				break;
-			}
-		}
+    if (number_of_primes == 1) {
+        cout << primes[0] << endl;
+        return 0;
+    } else if (number_of_primes == 2) {
+        cout << primes[1] << endl;
+        return 0;
+    }
 
-		if (is_prime) {
-			primes.push_back(candidate);
-		}
+    uint64_t candidate = 5;
+    uint64_t test_prime_limit = 2;
 
-		// Update test_prime_limit if necessary
-		if (primes[test_prime_limit] * primes[test_prime_limit] <= candidate) {
-			++test_prime_limit;
-		}
+    while (primes.size() < number_of_primes) {
+        // Check if we need to increase test_prime_limit
+        if (primes[test_prime_limit - 1] * primes[test_prime_limit - 1] <= candidate) {
+            test_prime_limit++;
+        }
 
-		// Increment candidate by 2 (skip even numbers)
-		candidate += 2;
-	}
+        bool is_prime = true;
+        for (size_t i = 1; i < test_prime_limit; ++i) {
+            if (candidate % primes[i] == 0) {
+                is_prime = false;
+                break;
+            }
+        }
 
-	std::cout << std::format("{}", primes.back()) << std::endl;
-	return 0;
+        if (is_prime) {
+            primes.push_back(candidate);
+        }
+
+        candidate += 2;
+    }
+
+    cout << primes.back() << endl;
+    return 0;
 }
