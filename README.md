@@ -31,7 +31,7 @@ We initialise primes to hold 2 and 3, and set test_prime_limit=2,  We test candi
 	uint64_t test_prime_limit = 2;  // Index to determine how many primes to test against
 ```
 
-However when the argument `number_of_primes` is 1 or 2, the while loop `while (primes.size() < target_count) {` never executes, and it immediately drops through to output the answer , so the initialisation of `candidate` and `test_prime_limit` has no effect, so it will not matter that they are invalid for cases 1 and 2.  So we should find it unneccessary  to special case `prime-number 1` and `prime-number 2`
+However when the argument `number_of_primes` is 1 or 2, the while loop `while (primes.size() < target_count) {` never executes, and it immediately drops through to output the answer , so the initialisation of `candidate` and `test_prime_limit` has no effect, so it will not matter that they are invalid for cases 1 and 2.  So we should find it unnecessary  to special case `prime-number 1` and `prime-number 2`
 
 For each candidate, if primes[test_prime_limit-1]*primes[test_prime_limit-1] is less than or equal to  the candidate, we increment test_prime_limit
  
