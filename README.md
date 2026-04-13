@@ -40,9 +40,18 @@ we then test the candidate against primes from primes[1] to primes[test_prime_li
 
 If the candidate passes test for each prime it is tested against, push it to primes.
 
-Do not check against the sqrt of candidate, as the check on test_prime_limit `primes[test_prime_limit]*primes[test_prime_limit] is less than or equal to  the candidate limit already accomplishes the same thing.
+Do not check against the sqrt of candidate, as the check on test_prime_limit `primes[test_prime_limit]*primes[test_prime_limit]` is less than or equal to  the candidate limit already accomplishes the same thing.
 
-Use the C++20 feature std::format for output.
+--------------
+
+--------------
+
+This incorrectly outputs prime number 1 as 3
+
+Revise to use the C++20 feature std::format for output.
+
+Output should be 
+std::cout << std::format("{}", primes[number_of_primes-1]) << std::endl;
 
 Generate C++ code to accomplish this, and a CMakeLists.txt file to build the code.
 
