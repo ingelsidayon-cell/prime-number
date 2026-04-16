@@ -42,26 +42,23 @@ If the candidate passes test for each prime it is tested against, push it to pri
 
 Do not check against the sqrt of candidate, as the check on test_prime_limit `primes[test_prime_limit]*primes[test_prime_limit]` is less than or equal to  the candidate limit already accomplishes the same thing.
 
---------------
-
---------------
-
-This incorrectly outputs prime number 1 as 3
-
-Revise to use the C++20 feature std::format for output.
-
 Output should be 
 std::cout << std::format("{}", primes[number_of_primes-1]) << std::endl;
 
-Generate C++ code to accomplish this, and a CMakeLists.txt file to build the code.
-
-The CMakeLists.txt file should force C++20 compilation with
+Generate C++20 code to accomplish this, The code is intended to be built with the CMakeList.txt file
 
 ```cmake
+cmake_minimum_required(VERSION 3.14)  # C++20 support available in CMake 3.14+
+project(prime-number)
+
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
+
+add_executable(prime-number prime-number.cpp)
 ```
+
+Do not modify CMakeList.txt unless needed.
 
 ----------
 
